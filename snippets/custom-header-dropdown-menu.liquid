@@ -1,0 +1,66 @@
+{%- doc -%}
+  Renders a dropdown menu list.
+
+  @param {linklist} [parent_link] - The linklist to render
+  @param {string} [id] - The id of the dropdown menu
+{%- enddoc -%}
+
+{% comment %}
+  Santhosh Changes
+  - add dropdown menu for header
+{% endcomment %}
+
+<ul class="custom-header-dropdown-menu__list" id="{{ id }}">
+  {%- for link in parent_link.links -%}
+    <li class="custom-header-dropdown-menu__item">
+      <a
+        href="{{ link.url }}"
+        class="custom-header-dropdown-menu__link{% if link.current %} custom-header-dropdown-menu__link--active{% endif %}{% if link.links != blank %} custom-header-dropdown-menu__link--has-children{% endif %}"
+      >
+        <span>{{- link.title | escape -}}</span>
+      </a>
+      {%- if link.links != blank -%}
+        <ul class="custom-header-dropdown-menu__submenu">
+          {%- for childlink in link.links -%}
+            <li class="custom-header-dropdown-menu__item">
+              <a
+                href="{{ childlink.url }}"
+                class="custom-header-dropdown-menu__link{% if childlink.current %} custom-header-dropdown-menu__link--active{% endif %}{% if childlink.links != blank %} custom-header-dropdown-menu__link--has-children{% endif %}"
+              >
+                <span>{{- childlink.title | escape -}}</span>
+              </a>
+              {%- if childlink.links != blank -%}
+                <ul class="custom-header-dropdown-menu__submenu">
+                  {%- for grandchildlink in childlink.links -%}
+                    <li class="custom-header-dropdown-menu__item">
+                      <a
+                        href="{{ grandchildlink.url }}"
+                        class="custom-header-dropdown-menu__link{% if grandchildlink.current %} custom-header-dropdown-menu__link--active{% endif %}{% if grandchildlink.links != blank %} custom-header-dropdown-menu__link--has-children{% endif %}"
+                      >
+                        <span>{{- grandchildlink.title | escape -}}</span>
+                      </a>
+                      {%- if grandchildlink.links != blank -%}
+                        <ul class="custom-header-dropdown-menu__submenu">
+                          {%- for grandgrandchildlink in grandchildlink.links -%}
+                            <li class="custom-header-dropdown-menu__item">
+                              <a
+                                href="{{ grandgrandchildlink.url }}"
+                                class="custom-header-dropdown-menu__link{% if grandgrandchildlink.current %} custom-header-dropdown-menu__link--active{% endif %}"
+                              >
+                                <span>{{- grandgrandchildlink.title | escape -}}</span>
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+</ul>

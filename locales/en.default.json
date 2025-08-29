@@ -290,5 +290,9 @@
       "sold_out": "Sold out",
       "unavailable": "Unavailable"
     }
+  },
+  /* Santhosh Changes */
+  "custom": {
+    "featured_blogs": "Featured blogs"
   }
 }

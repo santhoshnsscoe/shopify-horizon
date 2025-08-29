@@ -1,3 +1,9 @@
+{%- comment -%}
+ Santhosh Changes
+ - Add custom.js to the theme
+ - Add custom-footer.css to the theme
+{%- endcomment -%}
+ 
 {% layout none %}
 
 <!doctype html>
@@ -106,6 +112,9 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'template-giftcard.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}Santhosh Changes - added custom.css and custom.js{% endcomment -%}
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
   </head>
 
   <body class="gift-card">
@@ -216,4 +225,6 @@
       <span id="a11y-new-window-message">{{ 'accessibility.new_window' | t }}</span>
     </div>
   </body>
+  {%- comment -%}Santhosh Changes - added custom-footer.css{% endcomment -%}
+  {{ 'custom-footer.css' | asset_url | stylesheet_tag }}
 </html>

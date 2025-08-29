@@ -6,6 +6,12 @@
   @param {string} [transparent] - Show a transparent menu
 {%- enddoc -%}
 
+{% comment %}
+  Santhosh Changes
+  - add menu type mega menu or dropdown
+  - add menu padding, border radius, min width
+{% endcomment %}
+
 {% liquid
   assign block_settings = block.settings
   assign animation_speed = 200
@@ -64,24 +70,51 @@
       </div>
     {% endif %}
   {% else %}
-    <header-menu
-      ref="headerMenu"
-      class="header-menu mobile:hidden"
-      data-animation-delay="{{ animation_speed }}"
-      {{ block.shopify_attributes }}
-      style="--submenu-animation-speed: {{ animation_speed }}ms;{{ title_case_style }}"
-    >
-      <div class="header-menu__inner">
-        {%- render 'header-menu' %}
-      </div>
+    {% comment %} Santhosh Changes - if mega menu, show mega menu else show dropdown {% endcomment %}
+    {% if block_settings.menu_type == 'mega_menu' %}
+      <header-menu
+        ref="headerMenu"
+        class="header-menu mobile:hidden"
+        data-animation-delay="{{ animation_speed }}"
+        {{ block.shopify_attributes }}
+        style="--submenu-animation-speed: {{ animation_speed }}ms;{{ title_case_style }}"
+      >
+        <div class="header-menu__inner">
+          {%- render 'header-menu' %}
+        </div>
 
-      <script
-        src="{{ 'header-menu.js' | asset_url }}"
-        type="module"
-        fetchpriority="low"
-      ></script>
-    </header-menu>
+        <script
+          src="{{ 'header-menu.js' | asset_url }}"
+          type="module"
+          fetchpriority="low"
+        ></script>
+      </header-menu>
+      {% comment %} Santhosh Changes - else show dropdown {% endcomment %}
+      {% else %}
+        <custom-header-menu
+          ref="headerMenu"
+          class="custom-header-menu mobile:hidden"
+          id="custom-header-menu-{{ block.id }}"
+          data-animation-delay="{{ animation_speed }}"
+          {{ block.shopify_attributes }}
+          style="--submenu-animation-speed: {{ animation_speed }}ms;{{ title_case_style }}"
+        >
+          <div class="custom-header-menu__inner">
+            {%- render 'custom-header-menu' %}
+          </div>
+        </custom-header-menu>
+      {% endif %}
 {% endcase %}
+
+{% comment %} Santhosh Changes - add menu padding, border radius, min width {% endcomment %}
+{% style %}
+  #custom-header-menu-{{ block.id }} {
+    --menu-padding-inline: {{ block.settings.padding_inline | times: 0.0625 }}rem;
+    --menu-padding-block: {{ block.settings.padding_block | times: 0.0625 }}rem;
+    --menu-border-radius: {{ block.settings.border_radius | times: 0.0625 }}rem;
+    --menu-min-width: {{ block.settings.min_width | times: 0.0625 }}rem;
+  }
+{% endstyle %}
 
 {% stylesheet %}
   .menu-list--mobile {
@@ -615,6 +648,23 @@
       "label": "t:settings.menu",
       "default": "main-menu"
     },
+    /** Santhosh Changes */
+    {
+      "type": "select",
+      "id": "menu_type",
+      "label": "t:custom.menu_type",
+      "options": [
+        {
+          "value": "mega_menu",
+          "label": "t:custom.mega_menu"
+        },
+        {
+          "value": "dropdown",
+          "label": "t:custom.dropdown"
+        }
+      ],
+      "default": "mega_menu"
+    },
     {
       "type": "select",
       "id": "menu_style",
@@ -637,7 +687,9 @@
           "label": "t:options.featured_collections"
         }
       ],
-      "default": "collection_images"
+      "default": "collection_images",
+      /** Santhosh Changes */
+      "visible_if": "{{ block.settings.menu_type == 'mega_menu' }}"
     },
     {
       "type": "select",
@@ -658,7 +710,8 @@
         }
       ],
       "default": "4 / 5",
-      "visible_if": "{{ block.settings.menu_style == 'featured_products' }}"
+      /** Santhosh Changes */
+      "visible_if": "{{ block.settings.menu_style == 'featured_products' and block.settings.menu_type == 'mega_menu' }}"
     },
     {
       "type": "select",
@@ -679,7 +732,8 @@
         }
       ],
       "default": "16 / 9",
-      "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
+      /** Santhosh Changes */
+      "visible_if": "{{ block.settings.menu_style == 'featured_collections' and block.settings.menu_type == 'mega_menu' }}"
     },
     {
       "type": "range",
@@ -690,7 +744,8 @@
       "step": 1,
       "unit": "px",
       "default": 0,
-      "visible_if": "{{ block.settings.menu_style != 'text' }}"
+      /** Santhosh Changes */
+      "visible_if": "{{ block.settings.menu_style != 'text' and block.settings.menu_type == 'mega_menu' }}"
     },
     {
       "type": "select",
@@ -707,7 +762,8 @@
         }
       ],
       "default": "default",
-      "visible_if": "{{ block.settings.menu_style == 'featured_products' }}"
+      /** Santhosh Changes */
+      "visible_if": "{{ block.settings.menu_style == 'featured_products' and block.settings.menu_type == 'mega_menu' }}"
     },
     {
       "type": "select",
@@ -724,7 +780,56 @@
         }
       ],
       "default": "default",
-      "visible_if": "{{ block.settings.menu_style == 'featured_collections' or block.settings.menu_style == 'collection_images' }}"
+      /** Santhosh Changes */
+      "visible_if": "{{ block.settings.menu_style == 'featured_collections' or block.settings.menu_style == 'collection_images' and block.settings.menu_type == 'mega_menu' }}"
+    },
+    /** Santhosh Changes */
+    {
+      "type": "range",
+      "id": "padding_inline",
+      "label": "t:custom.padding_inline",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "visible_if": "{{ block.settings.menu_type == 'dropdown' }}"
+    },
+    /** Santhosh Changes */
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "t:custom.padding_block",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "visible_if": "{{ block.settings.menu_type == 'dropdown' }}"
+    },
+    /** Santhosh Changes */
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:custom.border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ block.settings.menu_type == 'dropdown' }}"
+    },
+    /** Santhosh Changes */
+    {
+      "type": "range",
+      "id": "min_width",
+      "label": "t:custom.min_width",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 200,
+      "visible_if": "{{ block.settings.menu_type == 'dropdown' }}"
     },
     {
       "type": "color_scheme",

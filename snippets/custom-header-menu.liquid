@@ -1,0 +1,54 @@
+{% comment %}
+  Santhosh Changes
+  - add dropdown menu for header
+{% endcomment %}
+
+{% liquid
+  assign color_scheme_classes = ''
+  assign color_scheme_setting_id = 'color_scheme_' | append: section.settings.menu_row
+  assign current_color_scheme = block.settings.color_scheme
+  assign parent_color_scheme = section.settings[color_scheme_setting_id]
+
+  if parent_color_scheme.id != current_color_scheme.id
+    assign color_scheme_classes = ' color-' | append: current_color_scheme
+  endif
+
+  # Check if header and menu colors match. This is used to apply different padding styles in css
+  if parent_color_scheme.settings.background.rgb == current_color_scheme.settings.background.rgb
+    assign color_scheme_classes = color_scheme_classes | append: ' color-scheme-matches-parent'
+  endif
+%}
+
+<nav class="custom-header-menu">
+  <div
+    class="custom-header-menu__list"
+    style="{% render 'menu-font-styles', settings: block.settings %}"
+  >
+    {% for link in block.settings.menu.links %}
+      <li
+        role="presentation"
+        class="custom-header-menu__list-item"
+      >
+        <a
+          href="{{ link.url }}"
+          class="custom-header-menu__link{% if link.active %} custom-header-menu__link--active{% endif %}{% if link.links != blank %} custom-header-menu__link--has-children{% endif %}"
+        >
+          <span class="custom-header-menu__link-title">{{- link.title -}}</span>
+        </a>
+        {%- if link.links != blank -%}
+          <div 
+            class="custom-header__dropdown-menu{{ color_scheme_classes }}" 
+            style="{% render 'submenu-font-styles', settings: block.settings %}"
+            ref="submenu[]"
+          >
+            {% assign list_id = 'DropdownMenuList-' | append: forloop.index %}
+            {% render 'custom-header-dropdown-menu',
+              parent_link: link,
+              id: list_id
+            %}
+          </div>
+        {%- endif -%}
+      </li>
+    {% endfor %}
+  </div>
+</nav>

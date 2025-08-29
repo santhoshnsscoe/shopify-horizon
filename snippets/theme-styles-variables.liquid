@@ -1,3 +1,8 @@
+{% comment %}
+  Santhosh Changes
+  - add font size based on device width
+{% endcomment %}
+
 {% style %}
   {%- liquid
     assign primary_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
@@ -48,6 +53,36 @@
     {{ accent_font_italic | font_face: font_display: 'swap' }}
     {{ accent_font_bold_italic | font_face: font_display: 'swap' }}
   {% endif %}
+
+  /** Santhosh Changes */
+  html {
+    font-size: 10px; /* Base for extra small devices (<480px) */
+
+    /* Small devices (mobile) */
+    @media screen and (min-width: 480px) {
+      font-size: 12px;
+    }
+
+    /* Medium devices (tablets) */
+    @media screen and (min-width: 768px) {
+      font-size: 14px;
+    }
+
+    /* Large devices (laptops) */
+    @media screen and (min-width: 1024px) {
+      font-size: 16px;
+    }
+
+    /* Extra large devices (desktops) */
+    @media screen and (min-width: 1280px) {
+      font-size: 18px;
+    }
+
+    /* 2K+ monitors */
+    @media screen and (min-width: 1536px) {
+      font-size: 20px;
+    }
+  }
 
   :root {
     /* Page Layout */

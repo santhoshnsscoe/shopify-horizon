@@ -1,1 +1,165 @@
 /* Santhosh: Custom CSS */
+
+
+
+/** custom header menu - start **/
+
+custom-header-menu {
+  width: 100%;
+}
+.custom-header-menu__list {
+  display: flex;
+  flex-shrink: 0;
+  white-space: nowrap;
+  gap: 0 var(--gap-xl);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.custom-header-menu__link {
+  font-family: var(--menu-top-level-font-family);
+  font-style: var(--menu-top-level-font-style);
+  font-weight: var(--menu-top-level-font-weight);
+  font-size: var(--menu-top-level-font-size);
+  line-height: var(--menu-top-level-font-line-height);
+  text-transform: var(--menu-top-level-font-case);
+  color: var(--menu-top-level-font-color);
+  transition: color var(--animation-speed) var(--animation-easing);
+  text-decoration: none;
+  display: flex;
+  min-height: var(--minimum-touch-target);
+  align-items: center;
+
+  &:hover,
+  &:focus {
+    color: var(--menu-top-level-font-color);
+  }
+
+  @media screen and (width >= 750px) {
+    font-size: var(--menu-top-level-font-size-desktop);
+  }
+}
+
+.custom-header-menu__link--has-children:after {
+  vertical-align: middle;
+  position: relative;
+  top: -3px;
+  content: "\2304";
+  margin-left: 5px;
+  font-size: 15px;
+  color: var(--menu-parent-font-color);
+  display: inline-block;
+  opacity: 0.7;
+  transition: color 0.2s;
+}
+
+.custom-header__dropdown-menu,
+.custom-header-dropdown-menu__submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: auto;
+  min-width: var(--menu-min-width);
+  width: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-radius: var(--menu-border-radius);
+  padding: var(--menu-padding-block) var(--menu-padding-inline);
+  z-index: 1000;
+  transition: opacity 0.2s;
+  opacity: 0;
+  pointer-events: none;
+  background-color: var(--color-background);
+}
+
+.custom-header-menu__list-item {
+  position: relative;
+  list-style-type: none;
+}
+
+.custom-header-menu__list-item.dropdown-open > .custom-header__dropdown-menu,
+.custom-header-dropdown-menu__item.dropdown-open
+  > .custom-header-dropdown-menu__submenu,
+.custom-header__dropdown-menu.dropdown-visible,
+.custom-header-dropdown-menu__submenu.dropdown-visible {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.custom-header__dropdown-menu {
+  left: auto;
+  top: 100%;
+}
+
+.custom-header-dropdown-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-header-dropdown-menu__item {
+  position: relative;
+  list-style-type: none;
+}
+
+.custom-header-dropdown-menu__link {
+  display: flex;
+  align-items: center;
+  padding: var(--menu-padding-block) var(--menu-padding-inline);
+  color: var(--menu-parent-font-color);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.custom-header-dropdown-menu__link:hover,
+.custom-header-dropdown-menu__link--active {
+  color: var(--menu-parent-active-font-color);
+}
+
+.custom-header-dropdown-menu__submenu {
+  left: 100%;
+  top: 0;
+  margin-left: 2px;
+  z-index: 1001;
+}
+
+.custom-header-dropdown-menu__item > .custom-header-dropdown-menu__submenu {
+  display: none;
+}
+
+.custom-header-dropdown-menu__item.dropdown-open
+  > .custom-header-dropdown-menu__submenu,
+.custom-header-dropdown-menu__submenu.dropdown-visible {
+  display: block;
+}
+
+.custom-header-dropdown-menu__item {
+  position: relative;
+}
+
+.custom-header-dropdown-menu__item
+  > .custom-header-dropdown-menu__link--has-children:after {
+  content: "\203A";
+  margin-left: auto;
+  color: var(--menu-parent-font-color);
+  display: inline-block;
+  opacity: 0.7;
+  transition: color 0.2s;
+}
+
+.custom-header-dropdown-menu__item > .custom-header-dropdown-menu__submenu:empty {
+  display: none !important;
+}
+
+.custom-header-dropdown-menu__item:not(:has(.custom-header-dropdown-menu__submenu))
+  > .custom-header-dropdown-menu__link:after {
+  content: "";
+}
+
+.custom-header-dropdown-menu__submenu
+  .custom-header-dropdown-menu__item
+  > .custom-header-dropdown-menu__link--has-children:after {
+  content: "\203A";
+}
+/** custom header menu - end **/

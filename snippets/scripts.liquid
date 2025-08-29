@@ -1,3 +1,8 @@
+{%- comment -%}
+ Santhosh Changes
+ - Add custom.js to the theme
+{%- endcomment -%}
+
 <script type="importmap">
   {
     "imports": {
@@ -276,3 +281,6 @@
     },
   };
 </script>
+
+{%- comment -%}Santhosh Changes{%- endcomment -%}
+<script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
