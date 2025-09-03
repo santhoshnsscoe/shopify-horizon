@@ -3,9 +3,9 @@ description: Section coding standards and best practices guide
 globs: sections/*.liquid
 alwaysApply: false
 ---
-# Section Development Standards
+# Section development standards
 
-## Section Requirements
+## Section requirements
 
 Every section must include:
 
@@ -14,9 +14,9 @@ Every section must include:
 - CSS scoping with section classes
 - Translation keys for all text
 
-## Section Patterns
+## Section patterns
 
-**Basic Section Structure:**
+**Basic section structure:**
 
 ```liquid
 {% liquid
@@ -73,7 +73,7 @@ Every section must include:
 {% endschema %}
 ```
 
-## Performance Patterns
+## Performance patterns
 
 - Use `{% liquid %}` for multiline logic
 - Lazy load images with `loading="lazy"`
@@ -81,3 +81,4 @@ Every section must include:
 - Use `container-queries` for responsive behavior
 
 [section-example.liquid](mdc:.cursor/rules/examples/section-example.liquid)
+

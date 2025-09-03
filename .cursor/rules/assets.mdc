@@ -5,8 +5,11 @@ alwaysApply: false
 ---
 # Assets
 
-The assets directory contains any assets that need to be referenced within a `.liquid` file, usually using the [asset_url](mdc:https:/shopify.dev/docs/api/liquid/filters/asset_url) Liquid filter.
+The `assets` directory contains static files—such as CSS, JavaScript, images, and icons—that need to be referenced in `.liquid` files or included on your theme.
 
-Assets is a flat directory, it may not contain subdirectories.
+- **No subdirectories:** this directory is flat and cannot contain folders.
+- **Usage:** reference files with the [`asset_url`](mdc:https://shopify.dev/docs/api/liquid/filters/asset_url) filter.
+- **SVG icons:** use the [`inline_asset_content`](mdc:https://shopify.dev/docs/api/liquid/filters/inline_asset_content) filter to include SVGs inline.
+- **Critical static files:** Only include assets (like `critical.css` or global JS) needed on every page. For page or section specific assets, prefer the `{% stylesheet %}` and `{% javascript %}` tags.
 
-Any images that are required in the code, including icons, may be stored within assets.  Icons can be used in `.liquid` files via the [inline_asset_content](mdc:https:/shopify.dev/docs/api/liquid/filters/inline_asset_content) Liquid filter.
+Keep all images, scripts, stylesheets, and icons required by your theme in this directory.

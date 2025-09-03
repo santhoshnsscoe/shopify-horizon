@@ -1,18 +1,18 @@
 ---
-description: Localization coding standards and best practices guide
-globs: *.liquid,schemas/*
+description: Shopify Liquid localization and translation guidelines
+globs: *.liquid
 alwaysApply: false
 ---
 # Localization Standards
 
-## Translation Requirements
+### Translation requirements
 
-- **Every user-facing text** must use translation filters
-- **Update `locales/en.default.json`** with all new keys
-- **Use descriptive, hierarchical keys** for organization
-- **Only add English text** - translators handle other languages
+- **Every user-facing text** must use translation filters.
+- **Update `locales/en.default.json`** with all new keys.
+- **Use descriptive, hierarchical keys** for organization.
+- **Only add English text**; translators handle other languages.
 
-## Translation Filter Usage
+### Translation filter usage
 
 **Use `{{ 'key' | t }}` for all text:**
 
@@ -28,7 +28,7 @@ alwaysApply: false
 <button>Add to cart</button>
 ```
 
-## Translation with Variables
+### Translation with variables
 
 **Use variables for interpolation:**
 
@@ -38,7 +38,7 @@ alwaysApply: false
 <p>{{ 'general.pagination.page' | t: page: paginate.current_page, pages: paginate.pages }}</p>
 ```
 
-**Corresponding keys in Locale files:**
+**Corresponding keys in locale files:**
 
 ```json
 {
@@ -53,15 +53,15 @@ alwaysApply: false
 }
 ```
 
-## Best Practices
+### Best practices
 
-**Content Guidelines:**
-- Write clear, concise text
-- Use sentence case for UI elements
-- Be consistent with terminology
-- Consider character limits for UI elements
+**Content guidelines:**
+- Write clear, concise text.
+- **Use sentence case** for all user-facing text, including titles, headings, and button labels (capitalize only the first word and proper nouns; e.g., `Featured collection` → `Featured collection`, not `Featured Collection`).
+- Be consistent with terminology.
+- Consider character limits for UI elements.
 
-**Variable Usage:**
-- Use interpolation rather than appending strings together
-- Naming should be prioritize clarity over brevity
-- Escape variables whenever they aren't expected to output HTML: `{{ variable | escape }}`
+**Variable usage:**
+- Use interpolation rather than appending strings together.
+- Prioritize clarity over brevity for variable naming.
+- Escape variables unless they output HTML: `{{ variable | escape }}`.
